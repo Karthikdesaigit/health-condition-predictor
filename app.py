@@ -6,9 +6,6 @@ import re
 import subprocess
 import importlib.util
 
-# Load SpaCy
-nlp = spacy.load("en_core_web_sm")
-
 model_name = "en_core_web_sm"
 
 try:
