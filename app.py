@@ -3,15 +3,15 @@ import streamlit as st
 import joblib
 import spacy
 import re
-from spacy.cli import download
 
-model_name = "en_core_web_sm"
+nlp = spacy.load("en_core_web_sm")
 
-try:
-    nlp = spacy.load(model_name)
-except OSError:
-    download(model_name)
-    nlp = spacy.load(model_name)
+# Mapping dictionary
+condition_dict = {
+    0: "Depression",
+    1: "Diabetes, Type 2",
+    2: "High Blood Pressure"
+}
 
 # Preprocess function
 def preprocess_text(text):
@@ -80,7 +80,8 @@ if st.button("🔍 Predict Condition"):
         clean_text = preprocess_text(user_input)
         vectorized = vectorizer.transform([clean_text])
         prediction = model.predict(vectorized)[0]
-        st.success(f"🧠 **Predicted Condition**: `{prediction}`")
+        predicted_condition = condition_dict.get(prediction, "Unknown")
+        st.success(f"🧠 **Predicted Condition**: `{predicted_condition}`")
 
 # Footer
 st.markdown("<div class='footer'>Built with ❤️ using Streamlit and spaCy</div>", unsafe_allow_html=True)
