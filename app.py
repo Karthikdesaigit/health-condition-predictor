@@ -44,6 +44,26 @@ st.markdown(
         margin-top: 3rem;
         color: #999;
     }
+    .description-box {
+        background-color: #e6f7ff;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #b3d9ff;
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .description-box h3 {
+        color: #0066cc;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+    .description-box ul {
+        margin-top: 0;
+        list-style-type: disc;
+        margin-left: 1.5rem;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -55,13 +75,15 @@ st.markdown("<div class='sub'>Describe your symptoms or health issue, and we’l
 
 # Information about types of diseases
 st.markdown("""
-    <div class='sub'>
-        This predictor can help identify health conditions based on the symptoms or health issues you describe. 
-        The possible conditions include:
-        - **Depression**: A mood disorder that causes persistent feelings of sadness and loss of interest.
-        - **Diabetes, Type 2**: A chronic condition that affects the way your body processes blood sugar (glucose).
-        - **High Blood Pressure**: A condition in which the force of the blood against the artery walls is too high.
-        Please enter a detailed description of your symptoms to receive a prediction.
+    <div class='description-box'>
+        <h3>Conditions the model can predict:</h3>
+        <p>This health condition predictor can identify the following conditions based on the symptoms you describe:</p>
+        <ul>
+            <li><strong>Depression</strong>: A mood disorder causing persistent feelings of sadness and loss of interest.</li>
+            <li><strong>Diabetes, Type 2</strong>: A chronic condition affecting how your body processes blood sugar (glucose).</li>
+            <li><strong>High Blood Pressure</strong>: A condition where the force of the blood against the artery walls is too high.</li>
+        </ul>
+        <p>Please provide a detailed description of your symptoms, and we'll predict a possible condition.</p>
     </div>
     """, unsafe_allow_html=True)
 
