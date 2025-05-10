@@ -57,6 +57,14 @@ st.markdown("<div class='sub'>Describe your symptoms or health issue, and we’l
 # Load model and vectorizer
 model, vectorizer = load_artifacts()
 
+from sklearn.utils.validation import check_is_fitted
+try:
+    check_is_fitted(vectorizer)
+    st.write("✅ Vectorizer is fitted and loaded.")
+except Exception as e:
+    st.error("❌ Vectorizer is NOT fitted.")
+    st.error(f"Error: {e}")
+
 # Input
 user_input = st.text_area("💬 Describe your current symptoms or health issue:", height=150)
 
