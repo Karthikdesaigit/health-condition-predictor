@@ -53,16 +53,20 @@ st.markdown(
 st.markdown("<div class='title'>🩺 Health Condition Predictor</div>", unsafe_allow_html=True)
 st.markdown("<div class='sub'>Describe your symptoms or health issue, and we’ll predict a possible condition.</div>", unsafe_allow_html=True)
 
+# Information about types of diseases
+st.markdown("""
+    <div class='sub'>
+        This predictor can help identify health conditions based on the symptoms or health issues you describe. 
+        The possible conditions include:
+        - **Depression**: A mood disorder that causes persistent feelings of sadness and loss of interest.
+        - **Diabetes, Type 2**: A chronic condition that affects the way your body processes blood sugar (glucose).
+        - **High Blood Pressure**: A condition in which the force of the blood against the artery walls is too high.
+        Please enter a detailed description of your symptoms to receive a prediction.
+    </div>
+    """, unsafe_allow_html=True)
+
 # Load model and vectorizer
 model, vectorizer = load_artifacts()
-
-from sklearn.utils.validation import check_is_fitted
-try:
-    check_is_fitted(vectorizer)
-    st.write("✅ Vectorizer is fitted and loaded.")
-except Exception as e:
-    st.error("❌ Vectorizer is NOT fitted.")
-    st.error(f"Error: {e}")
 
 # Input
 user_input = st.text_area("💬 Describe your current symptoms or health issue:", height=150)
@@ -72,17 +76,6 @@ if st.button("🔍 Predict Condition"):
     if user_input.strip() == "":
         st.warning("⚠️ Please enter a health description.")
     else:
-        st.write(type(vectorizer))
-        st.write(vectorizer)
-
-        try:
-            _ = vectorizer.transform(["test sentence"])
-            st.write("✅ Dummy transform succeeded.")
-        except Exception as e:
-            st.error("❌ Dummy transform failed.")
-            st.error(e)
-
-        
         vectorized = vectorizer.transform([user_input])
         prediction = model.predict(vectorized)[0]
         predicted_condition = condition_dict.get(prediction, "Unknown")
