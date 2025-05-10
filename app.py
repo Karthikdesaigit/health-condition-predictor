@@ -12,7 +12,6 @@ condition_dict = {
 }
 
 # Load model and vectorizer
-@st.cache(allow_output_mutation=True)
 def load_artifacts():
     model = joblib.load("model.pkl")
     vectorizer = joblib.load("vectorizer.pkl")
