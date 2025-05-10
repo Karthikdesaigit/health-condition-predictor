@@ -1,20 +1,8 @@
 
 import streamlit as st
 import joblib
-import spacy
 import re
 
-# Load spaCy model
-@st.cache_resource
-def load_spacy_model():
-    try:
-        nlp = spacy.load("en_core_web_sm")
-    except Exception as e:
-        st.error(f"Error loading spaCy model: {e}")
-        raise e
-    return nlp
-
-nlp = load_spacy_model()
 
 # Mapping dictionary
 condition_dict = {
@@ -22,15 +10,6 @@ condition_dict = {
     1: "Diabetes, Type 2",
     2: "High Blood Pressure"
 }
-
-# Preprocess function
-def preprocess_text(text):
-    doc = nlp(text.lower())
-    tokens = [
-        token.lemma_ for token in doc
-        if not token.is_stop and not token.is_punct and not token.like_num and not token.is_space and not token.is_bracket and not token.pos_ in ['SYM']
-    ]
-    return " ".join(tokens)
 
 # Load model and vectorizer
 @st.cache(allow_output_mutation=True)
@@ -87,8 +66,7 @@ if st.button("🔍 Predict Condition"):
     if user_input.strip() == "":
         st.warning("⚠️ Please enter a health description.")
     else:
-        clean_text = preprocess_text(user_input)
-        vectorized = vectorizer.transform([clean_text])
+        vectorized = vectorizer.transform([user_input])
         prediction = model.predict(vectorized)[0]
         predicted_condition = condition_dict.get(prediction, "Unknown")
         st.success(f"🧠 **Predicted Condition**: `{predicted_condition}`")
