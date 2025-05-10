@@ -3,8 +3,22 @@ import streamlit as st
 import joblib
 import spacy
 import re
+import spacy.cli
 
-nlp = spacy.load("en_core_web_sm")
+
+# Load spaCy model
+@st.cache_resource
+def load_spacy_model():
+    # Make sure the model is linked
+    try:
+        spacy.cli.download("en_core_web_sm")
+        nlp = spacy.load("en_core_web_sm")
+    except Exception as e:
+        st.error(f"Error loading spaCy model: {e}")
+        raise e
+    return nlp
+
+nlp = load_spacy_model()
 
 # Mapping dictionary
 condition_dict = {
