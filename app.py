@@ -73,6 +73,17 @@ if st.button("🔍 Predict Condition"):
     if user_input.strip() == "":
         st.warning("⚠️ Please enter a health description.")
     else:
+        st.write(type(vectorizer))
+        st.write(vectorizer)
+
+        try:
+            _ = vectorizer.transform(["test sentence"])
+            st.write("✅ Dummy transform succeeded.")
+        except Exception as e:
+            st.error("❌ Dummy transform failed.")
+            st.error(e)
+
+        
         vectorized = vectorizer.transform([user_input])
         prediction = model.predict(vectorized)[0]
         predicted_condition = condition_dict.get(prediction, "Unknown")
